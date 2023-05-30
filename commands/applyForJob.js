@@ -1,8 +1,11 @@
 import { makeRequestText } from '../utils/makeRequest.js';
 
-
 export const applyForJob = async () => {
-    const mapPage = await makeRequestText('/map.php?st=mn');
+    const homePage = await makeRequestText('/home.php');
 
-    await Deno.writeTextFile("./__log.txt", mapPage);
+    const isGoToWork = homePage.includes("<body class=txt bgcolor='#ddd9cd'  style='margin: 0;'>");
+
+    console.log('isGoToWork', isGoToWork);
+
+    // await Deno.writeTextFile("./__log.txt", homePage);
 }
