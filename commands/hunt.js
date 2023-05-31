@@ -1,7 +1,7 @@
 import { makeRequestText } from '../utils/makeRequest.js';
 import { getRandom } from '../utils/getRandom.js';
 
-export const hunt = async (mapPage) => {
+export const hunt = async (mapPage = '') => {
     const isVeryLowDanger = mapPage.includes('очень низкая');
 
     if (!isVeryLowDanger) {
