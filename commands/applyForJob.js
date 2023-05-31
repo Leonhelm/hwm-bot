@@ -16,7 +16,7 @@ export const applyForJob = async () => {
     }
 
     const jobPage = await makeRequestText(`/${jobLink}`);
-    const inputs = jobPage.split(`id="wbtn"></div>`)?.at(1)?.split(`<script>`)?.at(0).split(`<input type=hidden value='`).map(input => {
+    const inputs = jobPage?.split(`id="wbtn"></div>`)?.at(1)?.split(`<script>`)?.at(0)?.split(`<input type=hidden value='`)?.slice(1)?.map(input => {
         const inputaArr = input.split(`' name=`);
         const value = inputaArr.at(0);
         const separator = input.includes('id=') ? ' id=' : '>';
@@ -24,5 +24,15 @@ export const applyForJob = async () => {
         return [name, value];
     });
 
-    await Deno.writeTextFile("./__log.txt", JSON.stringify(separator));
+    if (!inputs?.length) {
+        return;
+    }
+
+    await makeRequestText('/object_do.php', {
+        method: 'POST',
+        body: inputs.map(([name, value]) => `${name}=${value}`).join('&'),
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        }
+    });
 }
