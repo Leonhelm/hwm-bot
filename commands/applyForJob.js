@@ -29,6 +29,12 @@ export const applyForJob = async () => {
     }
 
     const jobPage = await makeRequestText(`/${jobLink}`);
+    const isWorkaholicPenalty = jobPage.includes('штраф трудоголика');
+
+    if (isWorkaholicPenalty) {
+        throw new Error('Не устроен на работу: штраф трудоголика');
+    }
+
     const inputs = jobPage?.split(`id="wbtn"></div>`)?.at(1)?.split(`<script>`)?.at(0)?.split(`<input type=hidden value='`)?.slice(1)?.map(input => {
         const inputaArr = input.split(`' name=`);
         const value = inputaArr.at(0);
