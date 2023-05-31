@@ -28,11 +28,17 @@ export const applyForJob = async () => {
         return;
     }
 
-    await makeRequestText('/object_do.php', {
+    const objectPage = await makeRequestText('/object_do.php', {
         method: 'POST',
         body: inputs.map(([name, value]) => `${name}=${value}`).join('&'),
         headers: {
             "Content-Type": "application/x-www-form-urlencoded",
         }
     });
+
+    const isEmployed = objectPage.includes('Вы уже устроены.');
+
+    if (!isEmployed) {
+        throw new Error('Не устроен на работу!');
+    }
 }
