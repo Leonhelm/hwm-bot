@@ -1,4 +1,5 @@
-import { applyForJob } from './commands/applyForJob.js'
+import { applyForJob } from './commands/applyForJob.js';
+import { hunt } from './commands/hunt.js';
 
 const runBot = async () => {
     const hours = new Date().getHours();
@@ -7,7 +8,9 @@ const runBot = async () => {
         return;
     }
 
-    await applyForJob();
+    const { mapPage } = await applyForJob();
+
+    await hunt(mapPage);
 }
 
 await runBot();

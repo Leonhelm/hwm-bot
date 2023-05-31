@@ -2,20 +2,20 @@ import { makeRequestText } from '../utils/makeRequest.js';
 
 const mapUrls = ['/map.php?st=sh', '/map.php?st=fc', '/map.php?st=mn'];
 
-export const applyForJob = async (mapPageCb) => {
+export const applyForJob = async () => {
     const homePage = await makeRequestText('/home.php');
     const isGoToWork = homePage.includes("Вы нигде не работаете.");
 
     if (!isGoToWork) {
         console.log('Не устроен на работу: ещё работает');
-        return;
+        return {};
     }
 
     let jobLink = '';
+    let mapPage = '';
 
     for (let i = 0; i < mapUrls.length; i ++) {
-        const mapPage = await makeRequestText('/map.php?st=mn');
-
+        mapPage = await makeRequestText('/map.php?st=mn');
         jobLink = mapPage.split(`<tr  class="map_obj_table_hover" style=""><td ><a href='`)?.at(1)?.split(`' style`)?.at(0);
 
         if (jobLink) {
@@ -25,7 +25,7 @@ export const applyForJob = async (mapPageCb) => {
 
     if (!jobLink) {
         console.log('Не устроен на работу: все рабочие места заняты');
-        return;
+        return { mapPage };
     }
 
     const jobPage = await makeRequestText(`/${jobLink}`);
@@ -54,4 +54,6 @@ export const applyForJob = async (mapPageCb) => {
     if (!isEmployed) {
         throw new Error('Не устроен на работу: отсутствует подтверждение');
     }
+
+    return { mapPage };
 }
