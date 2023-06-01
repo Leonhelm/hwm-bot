@@ -8,14 +8,13 @@ export const applyForJob = async () => {
 
     if (!isGoToWork) {
         console.log('Не устроен на работу: ещё работает');
-        return {};
+        return;
     }
 
     let jobLink = '';
-    let mapPage = '';
 
     for (let i = 0; i < mapUrls.length; i ++) {
-        mapPage = await makeRequestText('/map.php?st=mn');
+        const mapPage = await makeRequestText(mapUrls[i]);
         jobLink = mapPage.split(`<tr  class="map_obj_table_hover" style=""><td ><a href='`)?.at(1)?.split(`' style`)?.at(0);
 
         if (jobLink) {
@@ -25,7 +24,7 @@ export const applyForJob = async () => {
 
     if (!jobLink) {
         console.log('Не устроен на работу: все рабочие места заняты');
-        return { mapPage };
+        return;
     }
 
     const jobPage = await makeRequestText(`/${jobLink}`);
@@ -60,6 +59,4 @@ export const applyForJob = async () => {
     if (!isEmployed) {
         throw new Error('Не устроен на работу: отсутствует подтверждение');
     }
-
-    return { mapPage };
 }

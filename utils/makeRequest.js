@@ -1,4 +1,5 @@
 import { GAME_URL, PHPSESSID } from "../constants.js";
+import { getRandom } from './getRandom.js';
 
 const getFullUrl = (url) => `${GAME_URL}${url}`;
 
@@ -39,7 +40,10 @@ export const makeRequestText = async (url, options) => {
   }
   lastReferrer = getFullUrl(url);
 
-  const response = await makeRequest(url, optionsEnhanced);
+  const [response] = await Promise.all([
+    makeRequest(url, optionsEnhanced),
+    new Promise(r => setTimeout(r, getRandom(1000, 3000)))
+  ]);
   const buffer = await response.arrayBuffer();
   return new TextDecoder('windows-1251').decode(buffer);
 };
