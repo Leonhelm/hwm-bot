@@ -31,7 +31,7 @@ export const applyForJob = async () => {
     const isWorkaholicPenalty = jobPage.includes('штраф трудоголика');
 
     if (isWorkaholicPenalty) {
-        throw new Error('Не устроен на работу: штраф трудоголика');
+        throw new Error('Не устроен на работу: штраф трудоголика - надо выиграть бой');
     }
 
     const inputs = jobPage?.split(`id="wbtn"></div>`)?.at(1)?.split(`<script>`)?.at(0)?.split(`<input type=hidden value='`)?.slice(1)?.map(input => {
@@ -43,7 +43,7 @@ export const applyForJob = async () => {
     });
 
     if (!inputs?.length) {
-        throw new Error('Не устроен на работу: отсутствуют inputs при просмотре места работы');
+        throw new Error('Не устроен на работу: надо ввести капчу (пустые inputs)');
     }
 
     const objectPage = await makeRequestText('/object_do.php', {
@@ -57,6 +57,6 @@ export const applyForJob = async () => {
     const isEmployed = objectPage.includes('Вы уже устроены.');
 
     if (!isEmployed) {
-        throw new Error('Не устроен на работу: отсутствует подтверждение');
+        throw new Error('Не устроен на работу: надо ввести капчу (отсутствует подтверждение)');
     }
 }
