@@ -9,8 +9,8 @@ const runBot = async () => {
         return;
     }
 
-    await applyForJob();
     await hunt();
+    await applyForJob();
 }
 
 await runBot();
