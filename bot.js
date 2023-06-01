@@ -5,6 +5,7 @@ const runBot = async () => {
     const hours = new Date().getHours();
 
     if (hours < 9 || hours > 22) {
+        console.log(`Не запускаем бота потому что час: ${hours}`);
         return;
     }
 
