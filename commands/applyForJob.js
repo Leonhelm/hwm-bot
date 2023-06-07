@@ -1,7 +1,6 @@
 import { makeRequestText } from '../utils/makeRequest.js';
 
-// const mapUrls = ['/map.php?st=sh', '/map.php?st=fc', '/map.php?st=mn'];
-const mapUrls = ['/map.php?st=mn'];
+const mapUrls = ['/map.php?st=sh', '/map.php?st=fc', '/map.php?st=mn'];
 
 export const applyForJob = async () => {
     const homePage = await makeRequestText('/home.php');
