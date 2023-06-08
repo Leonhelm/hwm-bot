@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: "36 7-22 * * *"
+    - cron: "36 4-19 * * *"
 
 jobs:
   run-bot:
