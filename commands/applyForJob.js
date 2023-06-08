@@ -15,9 +15,11 @@ export const applyForJob = async () => {
 
     for (let i = 0; i < mapUrls.length; i ++) {
         const mapPage = await makeRequestText(mapUrls[i]);
-        jobLink = mapPage.split(`<tr  class="map_obj_table_hover" style=""><td ><a href='`)?.at(1)?.split(`' style`)?.at(0);
+        const tr = mapPage.split(`<tr  class="map_obj_table_hover" style=""><td ><a href='`)?.at(1)?.split(`</tr>`)?.at(0);
+        const isFreeWork = tr?.includes('&nbsp;&raquo;&raquo;&raquo;&nbsp;');
 
-        if (jobLink) {
+        if (isFreeWork) {
+            jobLink = tr?.split(`' style`)?.at(0);
             break;
         }
     }
