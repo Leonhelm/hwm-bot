@@ -20,6 +20,7 @@ export const hunt = async ({ isWorkaholicPenalty } = {}) => {
     if (isPossibleAutobattle) {
         const sign = mapPage?.split(`var PL_JS_SIGN = '`)?.at(1)?.split(`';`)?.at(0);
         await makeRequestText(`/map.php?action=attack&auto=1&sign=${sign}&js_output=1&&rand=${getRandom(701491, 791491)}.${getRandom(9087982016, 9987982016)}`);
+        await makeRequestText(`/waiting_for_results.php?exit=1`);
         console.log('Провёл охоту автобоем');
         return {};
     }
