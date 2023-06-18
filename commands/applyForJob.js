@@ -58,7 +58,9 @@ export const applyForJob = async () => {
 
     const isEmployed = objectPage.includes('Вы уже устроены.');
 
-    if (!isEmployed) {
+    if (isEmployed) {
+        console.log('Устроен на работу');
+    } else {
         throw new Error('Не устроен на работу: надо ввести капчу (отсутствует подтверждение)');
     }
 }

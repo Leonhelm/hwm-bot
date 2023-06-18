@@ -1,5 +1,5 @@
 import { GAME_URL, PHPSESSID } from "../constants.js";
-import { getRandom } from './getRandom.js';
+import { getRandom } from './random.js';
 
 const getFullUrl = (url) => `${GAME_URL}${url}`;
 

@@ -1,5 +1,5 @@
 import { makeRequestText } from '../utils/makeRequest.js';
-import { getRandom } from '../utils/getRandom.js';
+import { getRandom } from '../utils/random.js';
 
 export const hunt = async () => {
     const mapPage = await makeRequestText('/map.php');
