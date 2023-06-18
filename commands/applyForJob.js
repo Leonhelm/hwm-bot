@@ -8,7 +8,7 @@ export const applyForJob = async () => {
 
     if (!isGoToWork) {
         console.log('Не устроен на работу: ещё работает');
-        return;
+        return {};
     }
 
     let jobLink = '';
@@ -26,14 +26,15 @@ export const applyForJob = async () => {
 
     if (!jobLink) {
         console.log('Не устроен на работу: все рабочие места заняты');
-        return;
+        return {};
     }
 
     const jobPage = await makeRequestText(`/${jobLink}`);
     const isWorkaholicPenalty = jobPage.includes('штраф трудоголика');
 
     if (isWorkaholicPenalty) {
-        throw new Error('Не устроен на работу: штраф трудоголика - надо выиграть бой');
+        console.log('Не устроен на работу: штраф трудоголика - надо выиграть бой');
+        return { isWorkaholicPenalty };
     }
 
     const inputs = jobPage?.split(`id="wbtn"></div>`)?.at(1)?.split(`<script>`)?.at(0)?.split(`<input type=hidden value='`)?.slice(1)?.map(input => {
@@ -45,15 +46,14 @@ export const applyForJob = async () => {
     });
 
     if (!inputs?.length) {
-        throw new Error('Не устроен на работу: надо ввести капчу (пустые inputs)');
+        console.log('Не устроен на работу: надо ввести капчу (пустые inputs)');
+        return {};
     }
 
     const objectPage = await makeRequestText('/object_do.php', {
         method: 'POST',
         body: inputs.map(([name, value]) => `${name}=${value}`).join('&'),
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
     });
 
     const isEmployed = objectPage.includes('Вы уже устроены.');
@@ -61,6 +61,8 @@ export const applyForJob = async () => {
     if (isEmployed) {
         console.log('Устроен на работу');
     } else {
-        throw new Error('Не устроен на работу: надо ввести капчу (отсутствует подтверждение)');
+        console.log('Не устроен на работу: надо ввести капчу (отсутствует подтверждение)');
     }
+
+    return {};
 }
