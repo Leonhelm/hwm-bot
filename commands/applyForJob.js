@@ -3,7 +3,13 @@ import { makeRequestText } from '../utils/makeRequest.js';
 const mapUrls = ['/map.php?st=sh', '/map.php?st=fc', '/map.php?st=mn'];
 
 export const applyForJob = async () => {
-    const homePage = await makeRequestText('/home.php');
+    let homePage = await makeRequestText('/home.php');
+    const isNotReviewed = homePage.includes("<span>Ознакомился</span>");
+
+    if (isNotReviewed) {
+        homePage = await makeRequestText('/home.php?skipn_day=1');
+    }
+
     const isGoToWork = homePage.includes("Вы нигде не работаете.");
 
     if (!isGoToWork) {
