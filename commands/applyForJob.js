@@ -4,7 +4,7 @@ const mapUrls = ['/map.php?st=sh', '/map.php?st=fc', '/map.php?st=mn'];
 
 export const applyForJob = async () => {
     let homePage = await makeRequestText('/home.php');
-    const isNotReviewed = homePage.includes("Ознакомился");
+    const isNotReviewed = homePage.includes("home.php?skipn=1");
 
     if (isNotReviewed) {
         homePage = await makeRequestText('/home.php?skipn_day=1');
