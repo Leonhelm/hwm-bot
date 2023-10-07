@@ -4,6 +4,13 @@ const mapUrls = ['/map.php?st=sh', '/map.php?st=fc', '/map.php?st=mn'];
 
 export const applyForJob = async () => {
     let homePage = await makeRequestText('/home.php');
+    const isAuth = homePage.includes('Персональные настройки');
+
+    if (!isAuth) {
+        throw new Error('Токен протух');
+    }
+
+
     const isNotReviewed = homePage.includes("home.php?skipn=1");
 
     if (isNotReviewed) {
