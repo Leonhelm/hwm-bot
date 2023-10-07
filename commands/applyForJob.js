@@ -10,19 +10,14 @@ export const applyForJob = async () => {
         throw new Error('Токен протух');
     }
 
-    let isNotReviewed = homePage.includes("home.php?skipn_day=1");
-
-    if (isNotReviewed) {
+    if (homePage.includes("home.php?skipn_day=1")) {
         homePage = await makeRequestText('/home.php?skipn_day=1');
     }
 
-    isNotReviewed = homePage.includes("home.php?skipn=1");
-
-    if (!homePage.includes("home.php?skipn=1")) {
-        homePage = await makeRequestText('/home.php?skipn=1');
+    if (homePage.includes("home.php?skipn=1")) {
+        await makeRequestText('/home.php?skipn=1');
+        homePage = await makeRequestText('/home.php?info');
     }
-
-    console.log(homePage);
 
     const isGoToWork = homePage.includes("Вы нигде не работаете.");
 
