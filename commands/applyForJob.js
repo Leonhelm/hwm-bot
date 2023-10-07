@@ -10,7 +10,7 @@ export const applyForJob = async () => {
         throw new Error('Токен протух');
     }
 
-    let isNotReviewed = homePage.includes("<span>Ознакомился</span>");
+    let isNotReviewed = homePage.includes("home.php?skipn_day=1");
 
     if (isNotReviewed) {
         homePage = await makeRequestText('/home.php?skipn_day=1');
