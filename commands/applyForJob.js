@@ -10,6 +10,8 @@ export const applyForJob = async () => {
         throw new Error('Токен протух');
     }
 
+    console.log(homePage);
+
 
     const isNotReviewed = homePage.includes("home.php?skipn=1");
 
