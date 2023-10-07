@@ -22,6 +22,8 @@ export const applyForJob = async () => {
         homePage = await makeRequestText('/home.php?skipn=1');
     }
 
+    console.log(homePage);
+
     const isGoToWork = homePage.includes("Вы нигде не работаете.");
 
     if (!isGoToWork) {
