@@ -3,7 +3,7 @@ import { getRandom } from '../utils/random.js';
 
 export const hunt = async ({ isWorkaholicPenalty } = {}) => {
     const mapPage = await makeRequestText('/map.php');
-    const isVeryLowDanger = mapPage.includes('низкая');
+    const isVeryLowDanger = mapPage.includes('очень низкая');
 
     if (!isVeryLowDanger) {
         await makeRequestText(`/map.php?action=skip&js_output=1&rand=${getRandom(701491, 791491)}.${getRandom(9087982016, 9987982016)}`);
